@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class FizzBuzz {
+
+	public static void main(String[] args) {
+		System.out.println("Enter first divisor");
+		Scanner a = new Scanner(System.in);
+		int fizz = a.nextInt();
+		System.out.println("Enter second divisor");
+		Scanner b = new Scanner(System.in);
+		int buzz = b.nextInt();
+		// loop over first 1000 numbers
+		for (int number = 0; number < 1000; number++)
+			if (number % fizz == 0 & number % buzz == 0) {
+				
+				System.out.println("fizzbuzz - " + number);
+			} else if (number % fizz == 0) {
+				
+				System.out.println("fizz - " + number);
+			} else if (number % buzz == 0) {
+				
+				System.out.println("buzz - " + number);
+			}
+	
+	}
+
+}
