@@ -1,0 +1,106 @@
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Random;
+
+import acm.program.*;
+import acm.graphics.*;
+
+public class RandomMazeGenerator extends GraphicsProgram {
+	ArrayList<Integer> column = new ArrayList<Integer>();
+	ArrayList<Integer> beforeColumn = new ArrayList<Integer>();
+	ArrayList<Integer> bbColumn = new ArrayList<Integer>();
+	public static final int APPLICATION_WIDTH = 900;
+	public static final int APPLICATION_HEIGHT = 900;
+	private int x = 0;
+	private int y = 0;
+	private int size = 20;
+	GRect rect;
+	Random randomG;
+
+	public static void main(String[] args) {
+		new RandomMazeGenerator().start(args);
+
+	}
+
+	public void run() {
+		// Grid Generator 10*9
+		GRect rect1 = new GRect(x, y, size, size);
+		add(rect1);
+		for (int b = 0; b < 10; b++) {
+		for (int a = 0; a < 9; a++) {
+				rect = new GRect(x += size, y, size, size);
+				 randomG = new Random();
+				int randomNum = randomG.nextInt(2);
+				System.out.print(randomNum);
+				
+				
+				  if (randomNum == 1) {
+
+					rect.setColor(Color.BLACK);
+					rect.setFilled(true);
+					rect1.setColor(Color.BLACK);
+					rect1.setFilled(true);
+				} else if (randomNum == 0) {
+					rect.setColor(Color.WHITE);
+					rect.setFilled(true);
+					rect1.setColor(Color.WHITE);
+					rect1.setFilled(true);
+				}
+				  if(randomNum == 1 ){
+					  
+				  }
+				/*
+				if(b==0){
+				bbColumn.add(randomNum);
+				
+				}
+				
+				if(b==1){
+					beforeColumn.add(randomNum);
+					
+				}
+				
+				if(b==2){
+				column.add(randomNum);
+				}
+				
+				
+			
+				// makes maze have a solution
+				if (b > 2) {
+					
+					if (beforeColumn.get(a) != column.get(a)
+							|| beforeColumn.get(a) != bbColumn.get(a)
+							|| beforeColumn.get(a) != (beforeColumn.get(a))
+							|| beforeColumn.get(a) != (beforeColumn.get(a))) {
+						Random chooseSide = new Random();
+						int randSide = chooseSide.nextInt(5);
+						switch (randSide) {
+						case 1:
+							bbColumn.set(a, 0);
+							break;
+						case 2:
+							column.set(a, 0);
+							break;
+						case 3:
+							beforeColumn.set(a++, 0);
+							break;
+						case 4:
+							beforeColumn.set(a--, 0);
+							break;
+						}
+					}
+					bbColumn = beforeColumn;
+					beforeColumn = column;
+				}*/
+
+				add(rect);
+
+			} // nested for loop ends
+			
+			rect.setLocation(x =0, y += size);
+
+			System.out.println();
+		}
+	}
+}
