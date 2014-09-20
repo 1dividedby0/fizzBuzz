@@ -1,0 +1,460 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeListener;
+
+public class FroYo extends JFrame implements ActionListener, ChangeListener {
+	public FroYo() {
+	}
+	 static JLabel statusLabel;
+	 static JLabel doneLabel= new JLabel();
+	public static void main(String[] args) {
+
+		// frame
+
+		JFrame frame = new JFrame("FroYo");
+
+		frame.setMinimumSize(new Dimension(300, 180));
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frame.pack();
+
+		frame.setLocation(400, 300);
+
+		frame.setVisible(true);
+
+		frame.getContentPane().setBackground(Color.RED);
+		
+		// chocolate button
+
+		JButton chocolate = new JButton("chocolate ");
+
+		chocolate.setLocation(20, 10);
+
+		frame.getContentPane().add(chocolate);
+
+		chocolate.setSize(75, 75);
+
+		chocolate.setVisible(true);
+
+		chocolate.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent Chocolate) {
+				// Execute when button is pressed
+				final JFrame frameChocolate = new JFrame("Chocolate");
+
+				frameChocolate.setMinimumSize(new Dimension(300, 180));
+
+				frameChocolate.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+				frameChocolate.pack();
+
+				frameChocolate.setLocation(400, 300);
+
+				frameChocolate.setVisible(true);
+				
+				frameChocolate.getContentPane().setBackground(Color.cyan);
+				// gummy
+				JButton gummy = new JButton("Gummy");
+
+				gummy.setLocation(200, 10);
+
+				frameChocolate.getContentPane().add(gummy);
+
+				gummy.setSize(80, 75);
+
+				gummy.setVisible(true);
+				gummy.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame gummyFrame = new JFrame("Gummy + Chocolate");
+
+						JLabel gummyLabel = new JLabel("Your price is $2.50.");
+						JPanel gummyPanel = new JPanel();
+						gummyPanel.add(gummyLabel);
+						gummyFrame.getContentPane().add(gummyPanel);
+
+						gummyFrame.setSize(200, 100);
+						gummyFrame.setVisible(true);
+					}
+				});
+				// oreos
+				JButton oreos = new JButton("Oreos");
+
+				oreos.setLocation(110, 10);
+
+				frameChocolate.getContentPane().add(oreos);
+
+				oreos.setSize(80, 75);
+
+				oreos.setVisible(true);
+				oreos.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame oreosFrame = new JFrame("Oreos + Chocolate");
+
+						JLabel oreosLabel = new JLabel("Your price is $2.50.");
+						JPanel oreosPanel = new JPanel();
+						oreosPanel.add(oreosLabel);
+						oreosFrame.getContentPane().add(oreosPanel);
+
+						oreosFrame.setSize(200, 100);
+						oreosFrame.setVisible(true);
+					}
+				});
+				// fruits
+				JButton fruits = new JButton("Fruits");
+
+				fruits.setLocation(20, 10);
+
+				frameChocolate.getContentPane().add(fruits);
+
+				fruits.setSize(80, 75);
+
+				fruits.setVisible(true);
+				fruits.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame fruitsFrame = new JFrame("Fruits + Chocolate");
+
+						JLabel doneLabel = new JLabel("Your price is $2.50.");
+						JPanel donePanel = new JPanel();
+						donePanel.add(doneLabel);
+						fruitsFrame.getContentPane().add(donePanel);
+
+						fruitsFrame.setSize(200, 100);
+						fruitsFrame.setVisible(true);
+					}
+				});
+
+				// done
+				JButton done = new JButton("done");
+
+				done.setLocation(110, 84);
+
+				frameChocolate.getContentPane().add(done);
+
+				done.setSize(80, 75);
+				
+				done.setVisible(true);
+				done.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						final JFrame doneFrame = new JFrame("Done");
+						JSlider slider= new JSlider(JSlider.HORIZONTAL,0,400,0);
+						
+						slider.setLocation(50,50);
+						slider.setVisible(true);
+						
+						doneFrame.getContentPane().add(doneLabel);
+						statusLabel=new JLabel("", JLabel.CENTER);
+						doneFrame.setSize(400, 300);
+						doneLabel.setText("Your price is $" + priceDecimal);
+						doneFrame.add(slider); 
+						doneFrame.setVisible(true);
+						   
+					  slider.addChangeListener(new ChangeListener() {
+					    		
+							@Override
+							public void stateChanged(
+									javax.swing.event.ChangeEvent e) {
+								//doing 16*8 for chocolate price variable because 16 ounces in pound  
+								int value = ((JSlider)e.getSource()).getValue();
+								double price=value/2.00/10;
+								BigDecimal priceDecimal = new BigDecimal(price);
+								priceDecimal.setScale(BigDecimal.ROUND_HALF_EVEN);
+								
+								  
+								
+								 statusLabel.setText("Ounces : " + (value/10.00));
+								
+								statusLabel.setLocation(300,250);
+								statusLabel.setSize(20,20);
+								statusLabel.setVisible(true);		
+							}
+							
+					      });
+					
+						}
+					
+				});
+			}
+		});
+
+		// vanilla button
+
+		JButton vanilla = new JButton("vanilla");
+
+		vanilla.setLocation(110, 10);
+
+		frame.getContentPane().add(vanilla);
+
+		vanilla.setSize(75, 75);
+
+		vanilla.setVisible(true);
+
+		vanilla.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent strawberry) {
+				// Execute when button is pressed
+				JFrame frameVanilla = new JFrame("Vanilla");
+
+				frameVanilla.setMinimumSize(new Dimension(300, 180));
+
+				frameVanilla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+				frameVanilla.pack();
+
+				frameVanilla.setLocation(400, 300);
+
+				frameVanilla.setVisible(true);
+				
+				frameVanilla.getContentPane().setBackground(Color.cyan);
+				// gummy
+				JButton gummy = new JButton("Gummy");
+
+				gummy.setLocation(200, 10);
+
+				frameVanilla.getContentPane().add(gummy);
+
+				gummy.setSize(80, 75);
+
+				gummy.setVisible(true);
+				gummy.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame gummyFrame = new JFrame("gummy + Vanilla");
+
+						JLabel gummyLabel = new JLabel("Your price is $2.50.");
+						JPanel gummyPanel = new JPanel();
+						gummyPanel.add(gummyLabel);
+						gummyFrame.getContentPane().add(gummyPanel);
+
+						gummyFrame.setSize(200, 100);
+						gummyFrame.setVisible(true);
+					}
+				});
+				// oreos
+				JButton oreos = new JButton("Oreos");
+
+				oreos.setLocation(110, 10);
+
+				frameVanilla.getContentPane().add(oreos);
+
+				oreos.setSize(80, 75);
+
+				oreos.setVisible(true);
+				oreos.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame oreosFrame = new JFrame("oreos + Vanilla");
+
+						JLabel oreosLabel = new JLabel("Your price is $2.50.");
+						JPanel oreosPanel = new JPanel();
+						oreosPanel.add(oreosLabel);
+						oreosFrame.getContentPane().add(oreosPanel);
+
+						oreosFrame.setSize(200, 100);
+						oreosFrame.setVisible(true);
+					}
+				});
+				// fruits
+				JButton fruits = new JButton("Fruits");
+
+				fruits.setLocation(20, 10);
+
+				frameVanilla.getContentPane().add(fruits);
+
+				fruits.setSize(80, 75);
+
+				fruits.setVisible(true);
+				fruits.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame fruitsFrame = new JFrame("fruits + Vanilla");
+
+						JLabel fruitsLabel = new JLabel("Your price is $2.50.");
+						JPanel fruitsPanel = new JPanel();
+						fruitsPanel.add(fruitsLabel);
+						fruitsFrame.getContentPane().add(fruitsPanel);
+
+						fruitsFrame.setSize(200, 100);
+						fruitsFrame.setVisible(true);
+					}
+				});
+				// done
+				JButton done = new JButton("done");
+
+				done.setLocation(110, 84);
+
+				frameVanilla.getContentPane().add(done);
+
+				done.setSize(80, 75);
+
+				done.setVisible(true);
+				done.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame doneFrame = new JFrame("Done");
+
+						JLabel doneLabel = new JLabel("Your price is $2.00.");
+						JPanel donePanel = new JPanel();
+						donePanel.add(doneLabel);
+						doneFrame.getContentPane().add(donePanel);
+
+						doneFrame.setSize(200, 100);
+						doneFrame.setVisible(true);
+						
+					}
+				});
+			}
+		});
+
+		// strawberry button
+
+		JButton strawberry = new JButton("strawberry");
+
+		strawberry.setLocation(200, 10);
+
+		frame.getContentPane().add(strawberry);
+
+		strawberry.setSize(80, 75);
+
+		strawberry.setVisible(true);
+
+		strawberry.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent strawberry) {
+				// Execute when button is pressed
+				JFrame frameStrawberry = new JFrame("Strawberry");
+
+				frameStrawberry.setMinimumSize(new Dimension(300, 180));
+
+				frameStrawberry.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+				frameStrawberry.pack();
+
+				frameStrawberry.setLocation(400, 300);
+
+				frameStrawberry.setVisible(true);
+				frameStrawberry.getContentPane().setBackground(Color.cyan);
+				// gummy
+				JButton gummy = new JButton("Gummy");
+
+				gummy.setLocation(200, 10);
+
+				frameStrawberry.getContentPane().add(gummy);
+
+				gummy.setSize(80, 75);
+
+				gummy.setVisible(true);
+				gummy.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame gummyFrame = new JFrame("gummy + Strawberry");
+
+						JLabel gummyLabel = new JLabel("Your price is $2.50.");
+						JPanel gummyPanel = new JPanel();
+						gummyPanel.add(gummyLabel);
+						gummyFrame.getContentPane().add(gummyPanel);
+
+						gummyFrame.setSize(200, 100);
+						gummyFrame.setVisible(true);
+					}
+				});
+				// oreos
+				JButton oreos = new JButton("Oreos");
+
+				oreos.setLocation(110, 10);
+
+				frameStrawberry.getContentPane().add(oreos);
+
+				oreos.setSize(80, 75);
+
+				oreos.setVisible(true);
+				oreos.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame oreosFrame = new JFrame("oreos + Strawberry");
+
+						JLabel oreosLabel = new JLabel("Your price is $2.50.");
+						JPanel oreosPanel = new JPanel();
+						oreosPanel.add(oreosLabel);
+						oreosFrame.getContentPane().add(oreosPanel);
+
+						oreosFrame.setSize(200, 100);
+						oreosFrame.setVisible(true);
+					}
+				});
+				// fruits
+				JButton fruits = new JButton("Fruits");
+
+				fruits.setLocation(20, 10);
+
+				frameStrawberry.getContentPane().add(fruits);
+
+				fruits.setSize(80, 75);
+
+				fruits.setVisible(true);
+				fruits.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame fruitsFrame = new JFrame("fruits + Strawberry");
+
+						JLabel fruitsLabel = new JLabel("Your price is $2.50.");
+						JPanel fruitsPanel = new JPanel();
+						fruitsPanel.add(fruitsLabel);
+						fruitsFrame.getContentPane().add(fruitsPanel);
+
+						fruitsFrame.setSize(200, 100);
+						fruitsFrame.setVisible(true);
+					}
+				});
+				// done
+				JButton done = new JButton("done");
+
+				done.setLocation(110, 84);
+
+				frameStrawberry.getContentPane().add(done);
+
+				done.setSize(80, 75);
+
+				done.setVisible(true);
+				done.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent done) {
+						JFrame doneFrame = new JFrame("Done");
+
+						JLabel doneLabel = new JLabel("Your price is $2.00.");
+						JPanel donePanel = new JPanel();
+						donePanel.add(doneLabel);
+						doneFrame.getContentPane().add(donePanel);
+
+						doneFrame.setSize(200, 100);
+						doneFrame.setVisible(true);
+					}
+				});
+			}
+		});
+}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		}
+
+	@Override
+	public void stateChanged(javax.swing.event.ChangeEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	}
