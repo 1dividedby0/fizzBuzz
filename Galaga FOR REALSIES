@@ -1,0 +1,199 @@
+	import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import acm.graphics.GImage;
+import acm.graphics.GLabel;
+import acm.graphics.GObject;
+import acm.program.GraphicsProgram;
+	
+	public class galaga extends GraphicsProgram {
+		public static final int APPLICATION_WIDTH = 800;
+		public static final int APPLICATION_HEIGHT = 820;
+	
+		private int vx;
+		ArrayList<GImage> enemies = new ArrayList<GImage>();
+		ArrayList<GImage> a = new ArrayList<GImage>();
+		GImage player = new GImage("galaga_ship.jpeg");
+	GImage space = new GImage("outer-space-vol1.jpg");
+	GImage temp;
+	GImage temp2;
+	
+	private int score = 0;
+	private int lives = 5;
+	private int timer = 0;
+	private int highscore = 0;
+	private double enemySpeed = 0.5;
+	
+	GLabel scoreLabel = new GLabel("Score: " + score, 0, 20);
+	GLabel livesLabel = new GLabel("Lives: " + lives, 0, 10);
+	GLabel highscoreLabel = new GLabel("Highscore: " + highscore, 0, 30);
+	
+	public static void main(String[] args) {
+		new galaga().start(args);
+	
+	}
+	
+	public void run() {
+		add(space);
+		space.setLocation(0, 0);
+		space.setSize(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+		GLabel scoreLabel = new GLabel("Score: " + score, 0, 20);
+		GLabel livesLabel = new GLabel("Lives: " + lives, 0, 10);
+		GLabel highscoreLabel = new GLabel("Highscore: " + highscore, 0, 30);
+	
+		add(livesLabel);
+		add(scoreLabel);
+		addKeyListeners();
+	
+		add(player);
+		player.setLocation(200, APPLICATION_HEIGHT - 50);
+		player.setSize(50, 50);
+	
+		addEnemies(1);
+	
+		while (true) {
+			player.move(vx, 0);
+			if (player.getX() <= 0)
+				player.move(vx, 0);
+			if (player.getX() >= APPLICATION_WIDTH)
+				player.move(-vx, 0);
+			for (int i = 0; i < a.size(); i++) {
+				temp = a.get(i);
+				temp.move(0, -10);
+				for (int j = 0; j < enemies.size(); j++) {
+					temp2 = enemies.get(j);
+					temp2.move(0, enemySpeed);
+					if (collision(temp, temp2)) {
+						score++;
+						scoreLabel.setLabel("score: " + score);
+	
+						remove(temp2);
+						remove(temp);
+						temp2.move(0, Integer.MIN_VALUE);
+					}
+					if (temp2.getY() > APPLICATION_HEIGHT) {
+						remove(temp2);
+						temp2.move(0, Integer.MIN_VALUE);
+						lives -= 1;
+					}
+				}
+				if (enemySpeed > 0.5) {
+					enemySpeed = 1;
+				}
+				remove(livesLabel);
+				livesLabel.setLabel("lives: " + lives);
+				add(livesLabel);
+				if (lives < 0) {
+					removeAll();
+					GLabel GameOver = new GLabel("GameOver",
+							APPLICATION_WIDTH / 2, APPLICATION_HEIGHT / 2);
+					add(GameOver);
+				}
+	
+				if (score >= highscore) {
+					/*
+					 * removeAll(); GLabel GameOver = new GLabel("You Win",
+					 * APPLICATION_WIDTH / 2, APPLICATION_HEIGHT / 2);
+					 * add(GameOver);
+					 */
+					remove(highscoreLabel);
+					highscore = score;
+					highscoreLabel.setLabel("Highscore: " + highscore);
+					add(highscoreLabel);
+				}
+			}
+			if (timer > 800) {
+				timer = 0;
+				addEnemies(1);
+			}
+			timer += 20;
+	
+			pause(20);
+			if (player.getX() <= 0 || player.getX() + 50 > APPLICATION_WIDTH) {
+				vx = -(vx);
+			}
+		}
+	
+	}
+	
+	// slow motion button
+	public void keyReleased(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_S) {
+			enemySpeed += 3;
+		}
+	}
+	
+	public void keyPressed(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+			vx = 10;
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+			vx = -10;
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
+			GImage bullet = new GImage("Fireball.jpg");
+			bullet.setLocation(player.getX(), player.getY());
+			bullet.setSize(50, 50);
+			add(bullet);
+			a.add(bullet);
+			// add bullet to bullets (the array list)
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_R) {
+	
+			score = 0;
+			lives = 5;
+			enemySpeed = 0.2;
+			removeAll();
+			add(space);
+			add(scoreLabel);
+			add(livesLabel);
+			add(highscoreLabel);
+			highscoreLabel.setLabel("Highscore: " + highscore);
+	
+			vx = 0;
+			timer = 0;
+	
+			if (score > highscore) {
+				remove(highscore);
+				highscore = score;
+				highscoreLabel.setLabel("Highscore: " + highscore);
+				add(highscoreLabel);
+	
+			}
+			add(player);
+			player.setLocation(200, APPLICATION_HEIGHT - 50);
+		}
+		// Slow motion button
+		if (ke.getKeyCode() == KeyEvent.VK_S) {
+			enemySpeed -= 3;
+		}
+		if (collision(temp, temp2)) {
+			score++;
+			scoreLabel.setLabel("score: " + score);
+	
+			remove(temp2);
+			remove(temp);
+			temp2.move(0, Integer.MIN_VALUE);
+		}
+	}
+	
+	public void addEnemies(int num) {
+		for (int i = 0; i < num; i++) {
+			GImage en = new GImage("galaga_enemy.jpeg");
+				en.setLocation(430 * Math.random() + 20, 0);
+				en.setSize(30, 30);
+				add(en);
+				enemies.add(en);
+			}
+		}
+	
+		public boolean collision(GObject a, GObject b) {
+			if (a.getBounds().intersects(b.getBounds())) {
+				return true;
+			}
+	
+			else {
+				return false;
+			}
+		}
+	}
